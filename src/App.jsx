@@ -54,8 +54,8 @@ function App() {
       <h1>15 Puzzle</h1>
       <PuzzleBoard board={board} setBoard={setBoard} size={SIZE} disabled={isSolving} />
       <div>
-        <button onClick={shuffle}>Shuffle</button>
-        <button onClick={solve}>Solve</button>
+        {/* <button onClick={shuffle}>Shuffle</button> */}
+        <button onClick={solve} disabled={isSolving}>{isSolving ? "Solving" : "Solve"}</button>
       </div>
       
       {solutionPath && (
