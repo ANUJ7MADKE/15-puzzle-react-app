@@ -34,7 +34,7 @@ function App() {
   const applyStep = (step) => {
     if (!solutionPath || step < 0 || step >= solutionPath.length) return;
     setCurrentStep(step);
-    setBoard(solutionPath[step]);
+    setBoard(solutionPath[step].board);
   };
   
   const nextStep = () => {
@@ -55,7 +55,7 @@ function App() {
       <PuzzleBoard board={board} setBoard={setBoard} size={SIZE} disabled={isSolving} />
       <div>
         {/* <button onClick={shuffle}>Shuffle</button> */}
-        <button onClick={solve} disabled={isSolving}>{isSolving ? "Solving" : "Solve"}</button>
+        <button onClick={solve} disabled={isSolving}>{isSolving ? "Solving..." : "Solve"}</button>
       </div>
       
       {solutionPath && (
@@ -75,6 +75,43 @@ function App() {
           }}>
             Solution Progress: <span style={{ color: "#4CAF50", fontWeight: "bold" }}>{currentStep}</span> / {solutionPath.length - 1}
           </h3>
+          
+          {/* Display the current step explanation */}
+          <div style={{
+            padding: "10px 15px",
+            backgroundColor: "#e8f5e9",
+            border: "1px solid #c8e6c9",
+            borderRadius: "5px",
+            marginBottom: "15px",
+            fontSize: "1.1rem",
+            fontWeight: currentStep > 0 ? "bold" : "normal",
+            color: "#2e7d32"
+          }}>
+            {currentStep > 0 ? solutionPath[currentStep].explanation : "Initial state"}
+          </div>
+          
+          {/* Algorithm explanation */}
+          <div style={{
+            backgroundColor: "#fff",
+            padding: "10px 15px",
+            border: "1px solid #ddd",
+            borderRadius: "5px",
+            marginBottom: "15px",
+            textAlign: "left",
+            fontSize: "0.9rem",
+            lineHeight: "1.4"
+          }}>
+            <h4 style={{ marginTop: 0, color: "#333" }}>About IDA* Algorithm:</h4>
+            <p>
+              The IDA* (Iterative Deepening A*) algorithm is used to find the optimal solution for the 15-puzzle:
+            </p>
+            <ol style={{ paddingLeft: "20px" }}>
+              <li>It uses Manhattan distance as a heuristic to estimate the cost to reach the goal.</li>
+              <li>It performs a depth-first search with an incrementally increasing threshold.</li>
+              <li>At each step, it considers all possible moves and chooses the one that minimizes the cost.</li>
+              <li>The algorithm guarantees finding the shortest solution path.</li>
+            </ol>
+          </div>
           
           <div style={{ marginBottom: "15px" }}>
             <button 
